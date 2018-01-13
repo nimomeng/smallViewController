@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     func initTableView() {
         table = UITableView.init(frame: self.view.frame)
         self.dataSource = DataSourceAndDelegateClass.init(data) { (cell: UITableViewCell, string: String) in
-            cell.textLabel?.text = string
+            cell.configCell(string)
         }
         table.delegate = dataSource
         table.dataSource = dataSource
