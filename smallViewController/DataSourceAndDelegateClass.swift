@@ -10,6 +10,13 @@ import UIKit
 
 class DataSourceAndDelegateClass: NSObject, UITableViewDataSource, UITableViewDelegate {
     var data = [1,2,3,4,5,6,7,7]
+    typealias ConfigCellBlock = (_ cell:UITableViewCell, _ textString: String) -> Void
+    var configCellBlock: ConfigCellBlock
+    init(_ data: [Int], _ configCellBlock: @escaping ConfigCellBlock) {
+        self.data = data
+        self.configCellBlock = configCellBlock
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return data.count
     }
@@ -24,7 +31,8 @@ class DataSourceAndDelegateClass: NSObject, UITableViewDataSource, UITableViewDe
         if cell == nil {
             cell = UITableViewCell.init(style: .default, reuseIdentifier: reusableID)
         }
-        cell?.configCell(String(data[indexPath.section]))
+//        cell?.configCell(String(data[indexPath.section]))
+        self.configCellBlock(cell!, String(data[indexPath.section]))
         return cell!
     }
     

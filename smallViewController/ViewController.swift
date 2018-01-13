@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     var table = UITableView()
     let data = [1,2,3,4,5,6,7,7]
-    var dataSource = DataSourceAndDelegateClass.init()
+    var dataSource: DataSourceAndDelegateClass? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initTableView()
@@ -27,49 +27,13 @@ class ViewController: UIViewController {
     
     func initTableView() {
         table = UITableView.init(frame: self.view.frame)
+        self.dataSource = DataSourceAndDelegateClass.init(data) { (cell: UITableViewCell, string: String) in
+            cell.textLabel?.text = string
+        }
         table.delegate = dataSource
         table.dataSource = dataSource
         self.view.addSubview(table)
         table.reloadData()
     }
 }
-
-// ===================================================
-// ===================================================
-
-// remove all dataSource out of viewController
-//class DataSourceAndDelegateClass: NSObject, UITableViewDataSource, UITableViewDelegate {
-//    var data = [1,2,3,4,5,6,7,7]
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return data.count
-//    }
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let reusableID = "reusableCell"
-//        var cell = tableView.dequeueReusableCell(withIdentifier: reusableID)
-//        if cell == nil {
-//            cell = UITableViewCell.init(style: .default, reuseIdentifier: reusableID)
-//        }
-//        cell?.configCell(String(data[indexPath.section]))
-//        return cell!
-//    }
-//    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 80
-//    }
-//}
-
-// =====================================================
-// =====================================================
-
-// remove all UI layout relatecd logic into extension of UITableViewCell
-//extension UITableViewCell {
-//    func configCell(_ text: String) {
-//        self.textLabel?.text = text
-//    }
-//}
 
